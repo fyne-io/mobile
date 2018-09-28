@@ -52,9 +52,9 @@ func init() {
 }
 
 func main(f func(App)) {
-	if tid := uint64(C.threadID()); tid != initThreadID {
-		log.Fatalf("app.Run called on thread %d, but app.init ran on %d", tid, initThreadID)
-	}
+	//if tid := uint64(C.threadID()); tid != initThreadID {
+	//	log.Fatalf("app.Run called on thread %d, but app.init ran on %d", tid, initThreadID)
+	//}
 
 	go func() {
 		f(theApp)
