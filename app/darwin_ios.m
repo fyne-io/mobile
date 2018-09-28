@@ -25,6 +25,13 @@ struct utsname sysInfo;
 
 @implementation GoAppAppDelegate
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    int scale = 1;
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(displayLinkWithTarget:selector:)]) {
+		scale = (int)[UIScreen mainScreen].scale; // either 1.0, 2.0, or 3.0.
+	}
+    CGSize size = [UIScreen mainScreen].bounds.size;
+    setDisplayMetrics((int)size.width, (int)size.height, scale);
+
 	lifecycleAlive();
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	self.controller = [[GoAppAppController alloc] initWithNibName:nil bundle:nil];

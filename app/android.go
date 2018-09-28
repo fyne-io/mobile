@@ -283,6 +283,11 @@ func main(f func(App)) {
 
 var mainUserFn func(App)
 
+var DisplayMetrics struct{
+	WidthPx int
+	HeightPx int
+}
+
 func mainUI(vm, jniEnv, ctx uintptr) error {
 	workAvailable := theApp.worker.WorkAvailable()
 
@@ -307,6 +312,8 @@ func mainUI(vm, jniEnv, ctx uintptr) error {
 				if errStr := C.createEGLSurface(w); errStr != nil {
 					return fmt.Errorf("%s (%s)", C.GoString(errStr), eglGetError())
 				}
+				DisplayMetrics.WidthPx = int(C.ANativeWindow_getWidth(w))
+				DisplayMetrics.HeightPx = int(C.ANativeWindow_getHeight(w))
 			}
 			theApp.sendLifecycle(lifecycle.StageFocused)
 			widthPx := int(C.ANativeWindow_getWidth(w))

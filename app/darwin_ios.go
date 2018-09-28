@@ -68,6 +68,17 @@ func main(f func(App)) {
 var pixelsPerPt float32
 var screenScale int // [UIScreen mainScreen].scale, either 1, 2, or 3.
 
+var DisplayMetrics struct{
+	WidthPx int
+	HeightPx int
+}
+
+//export setDisplayMetrics
+func setDisplayMetrics(width, height int, scale int) {
+	DisplayMetrics.WidthPx = width * scale
+	DisplayMetrics.HeightPx = height * scale
+}
+
 //export setScreen
 func setScreen(scale int) {
 	C.uname(&C.sysInfo)
