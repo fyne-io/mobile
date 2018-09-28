@@ -29,6 +29,7 @@ import (
 	"runtime"
 	"strings"
 	"sync"
+	"time"
 
 	"golang.org/x/mobile/event/lifecycle"
 	"golang.org/x/mobile/event/paint"
@@ -178,6 +179,24 @@ func lifecycleVisible() { theApp.sendLifecycle(lifecycle.StageVisible) }
 
 //export lifecycleFocused
 func lifecycleFocused() { theApp.sendLifecycle(lifecycle.StageFocused) }
+
+//export drawloop
+func drawloop() {
+	runtime.LockOSThread()
+	defer runtime.UnlockOSThread()
+
+	for workAvailable := theApp.worker.WorkAvailable();;{
+		select {
+		case <-workAvailable:
+			theApp.worker.DoWork()
+		case <-theApp.publish:
+			theApp.publishResult <- PublishResult{}
+			return
+		case <-time.After(100 * time.Millisecond): // incase the method blocked!!
+			return
+		}
+	}
+}
 
 //export startloop
 func startloop(ctx C.GLintptr) {
