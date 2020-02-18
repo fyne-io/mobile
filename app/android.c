@@ -138,7 +138,7 @@ static const EGLint RGB_888[] = {
 
 EGLDisplay display = NULL;
 EGLSurface surface = NULL;
-EGLContext context;
+EGLContext context = NULL;
 
 static char* initEGLDisplay() {
 	display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
