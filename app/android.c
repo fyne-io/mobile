@@ -138,6 +138,7 @@ static const EGLint RGB_888[] = {
 
 EGLDisplay display = NULL;
 EGLSurface surface = NULL;
+EGLContext context;
 
 static char* initEGLDisplay() {
 	display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
@@ -151,7 +152,6 @@ char* createEGLSurface(ANativeWindow* window) {
 	char* err;
 	EGLint numConfigs, format;
 	EGLConfig config;
-	EGLContext context;
 
 	if (display == 0) {
 		if ((err = initEGLDisplay()) != NULL) {
@@ -176,8 +176,10 @@ char* createEGLSurface(ANativeWindow* window) {
 		return "EGL create surface failed";
 	}
 
-	const EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
-	context = eglCreateContext(display, config, EGL_NO_CONTEXT, contextAttribs);
+    if (context == NULL) {
+        const EGLint contextAttribs[] = { EGL_CONTEXT_CLIENT_VERSION, 2, EGL_NONE };
+        context = eglCreateContext(display, config, EGL_NO_CONTEXT, contextAttribs);
+    }
 
 	if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE) {
 		return "eglMakeCurrent failed";
