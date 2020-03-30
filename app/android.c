@@ -85,6 +85,11 @@ void ANativeActivity_onCreate(ANativeActivity *activity, void* savedState, size_
 
 		setCurrentContext(activity->vm, (*env)->NewGlobalRef(env, activity->clazz));
 
+		// Set FILESDIR
+		if (setenv("FILESDIR", activity->internalDataPath, 1) != 0) {
+			LOG_INFO("setenv(\"FILESDIR\", \"%s\", 1) failed: %d", activity->internalDataPath, errno);
+		}
+
 		// Set TMPDIR.
 		jmethodID gettmpdir = find_method(env, current_class, "getTmpdir", "()Ljava/lang/String;");
 		jstring jpath = (jstring)(*env)->CallObjectMethod(env, activity->clazz, gettmpdir, NULL);
