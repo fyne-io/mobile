@@ -237,6 +237,6 @@ void showFileOpen(JNIEnv* env) {
 }
 
 void Java_org_golang_app_GoNativeActivity_filePickerReturned(JNIEnv *env, jclass clazz, jstring str) {
-    char* cstr = (*env)->GetStringUTFChars(env, str, JNI_FALSE);
-	filePickerReturned(cstr);
+    const char* cstr = (*env)->GetStringUTFChars(env, str, JNI_FALSE);
+	filePickerReturned((char*)cstr);
 }
