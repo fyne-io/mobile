@@ -22,7 +22,7 @@ package main
 import "C"
 
 import "ObjC"
-import _seq "golang.org/x/mobile/bind/seq"
+import _seq "github.com/fyne-io/mobile/bind/seq"
 
 type proxy interface { Bind_proxy_refnum__() int32 }
 
@@ -68,7 +68,7 @@ package main
 import "C"
 
 import (
-	_seq "golang.org/x/mobile/bind/seq"
+	_seq "github.com/fyne-io/mobile/bind/seq"
 )
 
 // suppress the error if seq ends up unused

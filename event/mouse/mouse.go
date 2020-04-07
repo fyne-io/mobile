@@ -4,13 +4,13 @@
 
 // Package mouse defines an event for mouse input.
 //
-// See the golang.org/x/mobile/app package for details on the event model.
-package mouse // import "golang.org/x/mobile/event/mouse"
+// See the github.com/fyne-io/mobile/app package for details on the event model.
+package mouse // import "github.com/fyne-io/mobile/event/mouse"
 
 import (
 	"fmt"
 
-	"golang.org/x/mobile/event/key"
+	"github.com/fyne-io/mobile/event/key"
 )
 
 // Event is a mouse event.

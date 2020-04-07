@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
-package java // import "golang.org/x/mobile/bind/java"
+package java // import "github.com/fyne-io/mobile/bind/java"
 
 // #cgo LDFLAGS: -llog
 //
@@ -12,7 +12,7 @@ import "C"
 import (
 	"unsafe"
 
-	"golang.org/x/mobile/internal/mobileinit"
+	"github.com/fyne-io/mobile/internal/mobileinit"
 )
 
 //export setContext

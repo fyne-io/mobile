@@ -19,7 +19,7 @@ import (
 	"unicode"
 	"unicode/utf8"
 
-	"golang.org/x/mobile/internal/importers"
+	"github.com/fyne-io/mobile/internal/importers"
 )
 
 type parser struct {

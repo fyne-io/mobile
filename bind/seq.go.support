@@ -20,8 +20,8 @@ import (
 	"os/signal"
 	"syscall"
 
-	_ "golang.org/x/mobile/bind/java"
-	_seq "golang.org/x/mobile/bind/seq"
+	_ "github.com/fyne-io/mobile/bind/java"
+	_seq "github.com/fyne-io/mobile/bind/seq"
 )
 
 func init() {

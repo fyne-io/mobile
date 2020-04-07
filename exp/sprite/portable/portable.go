@@ -7,7 +7,7 @@
 // It is intended to serve as a reference implementation for testing
 // other sprite Engines written against OpenGL, or other more exotic
 // modern hardware interfaces.
-package portable // import "golang.org/x/mobile/exp/sprite/portable"
+package portable // import "github.com/fyne-io/mobile/exp/sprite/portable"
 
 import (
 	"image"
@@ -15,10 +15,10 @@ import (
 
 	xdraw "golang.org/x/image/draw"
 	"golang.org/x/image/math/f64"
-	"golang.org/x/mobile/event/size"
-	"golang.org/x/mobile/exp/f32"
-	"golang.org/x/mobile/exp/sprite"
-	"golang.org/x/mobile/exp/sprite/clock"
+	"github.com/fyne-io/mobile/event/size"
+	"github.com/fyne-io/mobile/exp/f32"
+	"github.com/fyne-io/mobile/exp/sprite"
+	"github.com/fyne-io/mobile/exp/sprite/clock"
 )
 
 // Engine builds a sprite Engine that renders onto dst.

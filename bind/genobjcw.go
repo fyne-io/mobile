@@ -8,7 +8,7 @@ import (
 	"path"
 	"strings"
 
-	"golang.org/x/mobile/internal/importers/objc"
+	"github.com/fyne-io/mobile/internal/importers/objc"
 )
 
 type (
@@ -319,7 +319,7 @@ func (g *ObjcWrapper) GenGo() {
 	g.Printf("// #include \"interfaces.h\"\n")
 	g.Printf("import \"C\"\n\n")
 	g.Printf("import \"ObjC\"\n")
-	g.Printf("import _seq \"golang.org/x/mobile/bind/seq\"\n")
+	g.Printf("import _seq \"github.com/fyne-io/mobile/bind/seq\"\n")
 
 	for _, n := range g.types {
 		for _, f := range n.Funcs {

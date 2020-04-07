@@ -17,8 +17,8 @@ import (
 	"testing"
 	"time"
 
-	"golang.org/x/mobile/app/internal/apptest"
-	"golang.org/x/mobile/event/size"
+	"github.com/fyne-io/mobile/app/internal/apptest"
+	"github.com/fyne-io/mobile/event/size"
 )
 
 // TestAndroidApp tests the lifecycle, event, and window semantics of a

@@ -37,9 +37,9 @@ var destination = flag.String("device", "platform=iOS Simulator,name=iPhone 6s P
 // TestObjcSeqTest runs ObjC test SeqTest.m.
 func TestObjcSeqTest(t *testing.T) {
 	runTest(t, []string{
-		"golang.org/x/mobile/bind/testdata/testpkg",
-		"golang.org/x/mobile/bind/testdata/testpkg/secondpkg",
-		"golang.org/x/mobile/bind/testdata/testpkg/simplepkg",
+		"github.com/fyne-io/mobile/bind/testdata/testpkg",
+		"github.com/fyne-io/mobile/bind/testdata/testpkg/secondpkg",
+		"github.com/fyne-io/mobile/bind/testdata/testpkg/simplepkg",
 	}, "", "SeqTest.m", "Testpkg.framework", false, false)
 }
 
@@ -48,17 +48,17 @@ func TestObjcSeqBench(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping benchmark in short mode.")
 	}
-	runTest(t, []string{"golang.org/x/mobile/bind/testdata/benchmark"}, "", "SeqBench.m", "Benchmark.framework", true, true)
+	runTest(t, []string{"github.com/fyne-io/mobile/bind/testdata/benchmark"}, "", "SeqBench.m", "Benchmark.framework", true, true)
 }
 
 // TestObjcSeqWrappers runs ObjC test SeqWrappers.m.
 func TestObjcSeqWrappers(t *testing.T) {
-	runTest(t, []string{"golang.org/x/mobile/bind/testdata/testpkg/objcpkg"}, "", "SeqWrappers.m", "Objcpkg.framework", false, false)
+	runTest(t, []string{"github.com/fyne-io/mobile/bind/testdata/testpkg/objcpkg"}, "", "SeqWrappers.m", "Objcpkg.framework", false, false)
 }
 
 // TestObjcCustomPkg runs the ObjC test SeqCustom.m.
 func TestObjcCustomPkg(t *testing.T) {
-	runTest(t, []string{"golang.org/x/mobile/bind/testdata/testpkg"}, "Custom", "SeqCustom.m", "Testpkg.framework", false, false)
+	runTest(t, []string{"github.com/fyne-io/mobile/bind/testdata/testpkg"}, "Custom", "SeqCustom.m", "Testpkg.framework", false, false)
 }
 
 func runTest(t *testing.T, pkgNames []string, prefix, testfile, framework string, uitest, dumpOutput bool) {
@@ -67,7 +67,7 @@ func runTest(t *testing.T, pkgNames []string, prefix, testfile, framework string
 	}
 	if _, err := run("which gomobile"); err != nil {
 		t.Log("go install gomobile")
-		if _, err := run("go install golang.org/x/mobile/cmd/gomobile"); err != nil {
+		if _, err := run("go install github.com/fyne-io/mobile/cmd/gomobile"); err != nil {
 			t.Fatalf("gomobile install failed: %v", err)
 		}
 	}

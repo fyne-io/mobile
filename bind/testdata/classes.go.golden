@@ -556,7 +556,7 @@ import "C"
 
 import (
 	"Java"
-	_seq "golang.org/x/mobile/bind/seq"
+	_seq "github.com/fyne-io/mobile/bind/seq"
 )
 
 import "Java/java/lang/Runnable"
@@ -1886,7 +1886,7 @@ import (
 	"Java/java/lang"
 	"Java/java/util/concurrent"
 	"classes"
-	_seq "golang.org/x/mobile/bind/seq"
+	_seq "github.com/fyne-io/mobile/bind/seq"
 )
 
 // suppress the error if seq ends up unused
