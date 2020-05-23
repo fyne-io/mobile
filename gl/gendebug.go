@@ -884,7 +884,7 @@ const preamble = `// Copyright 2014 The Go Authors.  All rights reserved.
 // Code generated from gl.go using go generate. DO NOT EDIT.
 // See doc.go for details.
 
-// +build darwin linux openbsd windows
+// +build darwin linux openbsd freebsd windows
 // +build gldebug
 
 package gl
