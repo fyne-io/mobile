@@ -68,6 +68,11 @@ import (
 	"github.com/fyne-io/mobile/internal/mobileinit"
 )
 
+// mimeMap contains standard mime entries that are missing on Android
+var mimeMap = map[string]string{
+	".txt": "text/plain",
+}
+
 // RunOnJVM runs fn on a new goroutine locked to an OS thread with a JNIEnv.
 //
 // RunOnJVM blocks until the call to fn is complete. Any Java
@@ -338,10 +343,16 @@ func driverShowFileOpenPicker(callback func(string, func()), filter *FileFilter)
 
 	mimes := "*/*"
 	if filter.MimeTypes != nil {
-		mimes = strings.Join(filter.MimeTypes, ",")
+		mimes = strings.Join(filter.MimeTypes, "|")
 	} else if filter.Extensions != nil {
 		var mimeTypes []string
 		for _, ext := range filter.Extensions {
+			if mimeEntry, ok := mimeMap[ext]; ok {
+				mimeTypes = append(mimeTypes, mimeEntry)
+
+				continue
+			}
+
 			mimeType := mime.TypeByExtension(ext)
 			if mimeType == "" {
 				continue
@@ -349,7 +360,7 @@ func driverShowFileOpenPicker(callback func(string, func()), filter *FileFilter)
 
 			mimeTypes = append(mimeTypes, mimeType)
 		}
-		mimes = strings.Join(mimeTypes, ",")
+		mimes = strings.Join(mimeTypes, "|")
 	}
 	mimeStr := C.CString(mimes)
 	defer C.free(unsafe.Pointer(mimeStr))
