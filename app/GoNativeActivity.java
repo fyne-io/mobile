@@ -8,6 +8,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -127,13 +128,18 @@ public class GoNativeActivity extends NativeActivity {
         });
     }
 
-    static void showFileOpen() {
-        goNativeActivity.doShowFileOpen();
+    static void showFileOpen(String mimes) {
+        goNativeActivity.doShowFileOpen(mimes);
     }
 
-    void doShowFileOpen() {
+    void doShowFileOpen(String mimes) {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intent.setType("*/*");
+        if (mimes.contains("|") && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            intent.setType("*/*");
+            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimes.split("\\|"));
+        } else {
+            intent.setType(mimes);
+        }
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         startActivityForResult(Intent.createChooser(intent, "Open File"), FILE_OPEN_CODE);
     }
