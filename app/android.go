@@ -289,7 +289,7 @@ func main(f func(App)) {
 }
 
 // driverShowVirtualKeyboard requests the driver to show a virtual keyboard for text input
-func driverShowVirtualKeyboard(keyboard Keyboard) {
+func driverShowVirtualKeyboard(keyboard KeyboardType) {
 	err := mobileinit.RunOnJVM(func(vm, jniEnv, ctx uintptr) error {
 		env := (*C.JNIEnv)(unsafe.Pointer(jniEnv)) // not a Go heap pointer
 		C.showKeyboard(env, C.int(int32(keyboard)))
