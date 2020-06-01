@@ -42,7 +42,7 @@ char* createEGLSurface(ANativeWindow* window);
 char* destroyEGLSurface();
 int32_t getKeyRune(JNIEnv* env, AInputEvent* e);
 
-void showKeyboard(JNIEnv* env);
+void showKeyboard(JNIEnv* env, int keyboardType);
 void hideKeyboard(JNIEnv* env);
 void showFileOpen(JNIEnv* env, char* mimes);
 
@@ -296,16 +296,15 @@ func main(f func(App)) {
 }
 
 // driverShowVirtualKeyboard requests the driver to show a virtual keyboard for text input
-func driverShowVirtualKeyboard() {
-	if err := mobileinit.RunOnJVM(showSoftInput); err != nil {
+func driverShowVirtualKeyboard(keyboard KeyboardType) {
+	err := mobileinit.RunOnJVM(func(vm, jniEnv, ctx uintptr) error {
+		env := (*C.JNIEnv)(unsafe.Pointer(jniEnv)) // not a Go heap pointer
+		C.showKeyboard(env, C.int(int32(keyboard)))
+		return nil
+	})
+	if err != nil {
 		log.Fatalf("app: %v", err)
 	}
-}
-
-func showSoftInput(vm, jniEnv, ctx uintptr) error {
-	env := (*C.JNIEnv)(unsafe.Pointer(jniEnv)) // not a Go heap pointer
-	C.showKeyboard(env)
-	return nil
 }
 
 // driverHideVirtualKeyboard requests the driver to hide any visible virtual keyboard
@@ -379,8 +378,8 @@ func driverShowFileOpenPicker(callback func(string, func()), filter *FileFilter)
 
 var mainUserFn func(App)
 
-var DisplayMetrics struct{
-	WidthPx int
+var DisplayMetrics struct {
+	WidthPx  int
 	HeightPx int
 }
 
