@@ -85,7 +85,7 @@ func TestJavaSeqTest(t *testing.T) {
 // rudimentary timing logic and outputs benchcmp compatible runtimes
 // to logcat. Use
 //
-// adb logcat -v raw GoLog:* *:S
+// adb logcat -v raw Fyne:* *:S
 //
 // while running the benchmark to see the results.
 func TestJavaSeqBench(t *testing.T) {
