@@ -13,12 +13,12 @@ import (
 	"image"
 	"image/draw"
 
-	xdraw "golang.org/x/image/draw"
-	"golang.org/x/image/math/f64"
 	"github.com/fyne-io/mobile/event/size"
 	"github.com/fyne-io/mobile/exp/f32"
 	"github.com/fyne-io/mobile/exp/sprite"
 	"github.com/fyne-io/mobile/exp/sprite/clock"
+	xdraw "golang.org/x/image/draw"
+	"golang.org/x/image/math/f64"
 )
 
 // Engine builds a sprite Engine that renders onto dst.
