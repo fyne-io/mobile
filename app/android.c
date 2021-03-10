@@ -51,6 +51,7 @@ static jmethodID key_rune_method;
 static jmethodID show_keyboard_method;
 static jmethodID hide_keyboard_method;
 static jmethodID show_file_open_method;
+static jmethodID show_file_save_method;
 
 jint JNI_OnLoad(JavaVM* vm, void* reserved) {
 	JNIEnv* env;
@@ -82,6 +83,7 @@ void ANativeActivity_onCreate(ANativeActivity *activity, void* savedState, size_
 		show_keyboard_method = find_static_method(env, current_class, "showKeyboard", "(I)V");
 		hide_keyboard_method = find_static_method(env, current_class, "hideKeyboard", "()V");
 		show_file_open_method = find_static_method(env, current_class, "showFileOpen", "(Ljava/lang/String;)V");
+		show_file_save_method = find_static_method(env, current_class, "showFileSave", "()V");
 
 		setCurrentContext(activity->vm, (*env)->NewGlobalRef(env, activity->clazz));
 
@@ -236,6 +238,14 @@ void showFileOpen(JNIEnv* env, char* mimes) {
 		current_class,
 		show_file_open_method,
 		mimesJString
+	);
+}
+
+void showFileSave(JNIEnv* env) {
+    (*env)->CallStaticVoidMethod(
+		env,
+		current_class,
+		show_file_save_method
 	);
 }
 
