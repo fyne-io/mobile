@@ -45,7 +45,7 @@ int32_t getKeyRune(JNIEnv* env, AInputEvent* e);
 void showKeyboard(JNIEnv* env, int keyboardType);
 void hideKeyboard(JNIEnv* env);
 void showFileOpen(JNIEnv* env, char* mimes);
-void showFileSave(JNIEnv* env);
+void showFileSave(JNIEnv* env, char* mimes);
 
 void Java_org_golang_app_GoNativeActivity_filePickerReturned(JNIEnv *env, jclass clazz, jstring str);
 */
@@ -378,16 +378,41 @@ func driverShowFileOpenPicker(callback func(string, func()), filter *FileFilter)
 	}
 }
 
-func driverShowFileSavePicker(callback func(string, func())) {
+func driverShowFileSavePicker(callback func(string, func()), filter *FileFilter) {
 	fileCallback = callback
 
-	open := func(vm, jniEnv, ctx uintptr) error {
+	mimes := "*/*"
+	if filter.MimeTypes != nil {
+		mimes = strings.Join(filter.MimeTypes, "|")
+	} else if filter.Extensions != nil {
+		var mimeTypes []string
+		for _, ext := range filter.Extensions {
+			if mimeEntry, ok := mimeMap[ext]; ok {
+				mimeTypes = append(mimeTypes, mimeEntry)
+
+				continue
+			}
+
+			mimeType := mime.TypeByExtension(ext)
+			if mimeType == "" {
+				mimeType = "*/*" // could not find one, so allow all
+				continue
+			}
+
+			mimeTypes = append(mimeTypes, mimeType)
+		}
+		mimes = strings.Join(mimeTypes, "|")
+	}
+	mimeStr := C.CString(mimes)
+	defer C.free(unsafe.Pointer(mimeStr))
+
+	save := func(vm, jniEnv, ctx uintptr) error {
 		env := (*C.JNIEnv)(unsafe.Pointer(jniEnv)) // not a Go heap pointer
-		C.showFileSave(env)
+		C.showFileSave(env, mimeStr)
 		return nil
 	}
 
-	if err := mobileinit.RunOnJVM(open); err != nil {
+	if err := mobileinit.RunOnJVM(save); err != nil {
 		log.Fatalf("app: %v", err)
 	}
 }
