@@ -338,9 +338,7 @@ func insetsChanged(top, bottom, left, right int) {
 	screenInsetTop, screenInsetBottom, screenInsetLeft, screenInsetRight = top, bottom, left, right
 }
 
-func driverShowFileOpenPicker(callback func(string, func()), filter *FileFilter) {
-	fileCallback = callback
-
+func mimeStringFromFilter(filter *FileFilter) string {
 	mimes := "*/*"
 	if filter.MimeTypes != nil {
 		mimes = strings.Join(filter.MimeTypes, "|")
@@ -363,6 +361,13 @@ func driverShowFileOpenPicker(callback func(string, func()), filter *FileFilter)
 		}
 		mimes = strings.Join(mimeTypes, "|")
 	}
+	return mimes
+}
+
+func driverShowFileOpenPicker(callback func(string, func()), filter *FileFilter) {
+	fileCallback = callback
+
+	mimes := mimeStringFromFilter(filter)
 	mimeStr := C.CString(mimes)
 	defer C.free(unsafe.Pointer(mimeStr))
 
@@ -381,28 +386,7 @@ func driverShowFileOpenPicker(callback func(string, func()), filter *FileFilter)
 func driverShowFileSavePicker(callback func(string, func()), filter *FileFilter) {
 	fileCallback = callback
 
-	mimes := "*/*"
-	if filter.MimeTypes != nil {
-		mimes = strings.Join(filter.MimeTypes, "|")
-	} else if filter.Extensions != nil {
-		var mimeTypes []string
-		for _, ext := range filter.Extensions {
-			if mimeEntry, ok := mimeMap[ext]; ok {
-				mimeTypes = append(mimeTypes, mimeEntry)
-
-				continue
-			}
-
-			mimeType := mime.TypeByExtension(ext)
-			if mimeType == "" {
-				mimeType = "*/*" // could not find one, so allow all
-				continue
-			}
-
-			mimeTypes = append(mimeTypes, mimeType)
-		}
-		mimes = strings.Join(mimeTypes, "|")
-	}
+	mimes := mimeStringFromFilter(filter)
 	mimeStr := C.CString(mimes)
 	defer C.free(unsafe.Pointer(mimeStr))
 

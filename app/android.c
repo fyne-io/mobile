@@ -242,6 +242,7 @@ void showFileOpen(JNIEnv* env, char* mimes) {
 }
 
 void showFileSave(JNIEnv* env, char* mimes) {
+    jstring mimesJString = (*env)->NewStringUTF(env, mimes);
     (*env)->CallStaticVoidMethod(
 		env,
 		current_class,
