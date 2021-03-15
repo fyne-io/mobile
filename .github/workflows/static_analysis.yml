@@ -18,8 +18,8 @@ jobs:
         go install golang.org/x/lint/golint@latest
         go install honnef.co/go/tools/cmd/staticcheck@v0.1.2
 
-     - name: Build
-       run: go build -tags ci ./...
+    - name: Build
+      run: go build -tags ci ./...
 
 #    - name: Vet
 #      run: go vet -tags ci ./...
