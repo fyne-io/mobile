@@ -21,7 +21,6 @@ jobs:
      - name: Build
        run: go build -tags ci ./...
 
-# Some vet errors require complex GL fixes :(
 #    - name: Vet
 #      run: go vet -tags ci ./...
 
